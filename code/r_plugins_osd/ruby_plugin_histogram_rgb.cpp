@@ -6,12 +6,11 @@
 // no API to read back live video pixels, so this plugin can't sample the video feed
 // by itself. It gets histogram data from two possible sources, in priority order:
 //
-//  1. Live data: HISTOGRAM_LIVE_FILE_PATH, a small binary file periodically
-//     (re)written by the companion core plugin
-//     (code/r_plugins_core/ruby_core_plugin_histogram_rgb.cpp), which captures
-//     frames from the vehicle's camera via V4L2 and streams the computed bins to
-//     the controller over the radio data channel. Used only while "fresh"
-//     (updated in the last HISTOGRAM_LIVE_STALE_SECONDS).
+//  1. Live data: HISTOGRAM_LIVE_FILE_PATH, a small binary file written every
+//     HISTOGRAM_UPDATE_INTERVAL_MS by the controller's own video decoder
+//     (code/r_player/mpp_core.cpp), which samples the already-decoded NV12
+//     frame directly. Used only while "fresh" (updated in the last
+//     HISTOGRAM_LIVE_STALE_SECONDS).
 //  2. Static image: HISTOGRAM_IMAGE_PATH, a 24 bit binary PPM (P6) file, useful
 //     for testing without the core plugin / radio link.
 //
@@ -35,7 +34,7 @@
 #define HISTOGRAM_IMAGE_PATH "/home/radxa/ruby/media/histogram_source.ppm"
 #define HISTOGRAM_LIVE_FILE_PATH "/home/radxa/ruby/tmp/histogram_live.bin"
 #define HISTOGRAM_LIVE_STALE_SECONDS 5
-#define HISTOGRAM_RECHECK_INTERVAL_SECONDS 3
+#define HISTOGRAM_RECHECK_INTERVAL_MS 300
 #define HISTOGRAM_MAX_BINS 64
 #define HISTOGRAM_LIVE_MAGIC 0x52474248u // 'RGBH', must match the core plugin
 
@@ -65,8 +64,15 @@ static int s_nHistG[256];
 static int s_nHistB[256];
 static bool s_bHaveRealHistogram = false;
 static bool s_bUsingLiveData = false;
-static time_t s_tLastCheckTime = 0;
+static long s_lLastCheckTimeMs = 0;
 static time_t s_tLastFileMTime = 0;
+
+static long _get_time_ms()
+{
+   struct timespec ts;
+   clock_gettime(CLOCK_MONOTONIC, &ts);
+   return (long)ts.tv_sec*1000 + ts.tv_nsec/1000000;
+}
 
 #ifdef __cplusplus
 extern "C" {
@@ -201,10 +207,10 @@ static bool _try_load_live_histogram()
 
 static void _maybe_reload_histogram()
 {
-   time_t tNow = time(NULL);
-   if ( (tNow - s_tLastCheckTime) < HISTOGRAM_RECHECK_INTERVAL_SECONDS )
+   long lNowMs = _get_time_ms();
+   if ( (lNowMs - s_lLastCheckTimeMs) < HISTOGRAM_RECHECK_INTERVAL_MS )
       return;
-   s_tLastCheckTime = tNow;
+   s_lLastCheckTimeMs = lNowMs;
 
    if ( _try_load_live_histogram() )
    {
@@ -240,7 +246,7 @@ void init(void* pEngine)
    _generate_fallback_histogram();
    s_bHaveRealHistogram = false;
    s_bUsingLiveData = false;
-   s_tLastCheckTime = 0;
+   s_lLastCheckTimeMs = 0;
    s_tLastFileMTime = 0;
 }
 

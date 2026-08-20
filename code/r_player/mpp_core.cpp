@@ -59,6 +59,8 @@ uint8_t* g_pInputBuffer = NULL;
 MppPacket g_MPPInputPacket;
 u32 g_uTimeFirstFrame = 0;
 u32 g_uTimeMPPPeriodicChecks = 0;
+u32 g_uTimeLastHistogramUpdate = 0;
+#define HISTOGRAM_UPDATE_INTERVAL_MS 300
 
 bool g_bMPPFramesBuffersInitialised = false;
 bool g_bMPPFrameEOS = false;
@@ -122,8 +124,8 @@ int mpp_feed_data_to_decoder(void* pData, int iLength)
 }
 
 // --- RGB histogram sampling (feeds the OSD "RGB Histogram" plugin) ---------
-// Reads a strided sample of pixels once a second (piggy-backing on the
-// existing 1Hz _mpp_core_periodic_checks() throttle below) from the NV12
+// Reads a strided sample of pixels every HISTOGRAM_UPDATE_INTERVAL_MS (own
+// throttle, independent of _mpp_core_periodic_checks() below) from the NV12
 // buffer that is already decoded and about to be displayed, so it costs no
 // extra decode/capture work. Frame buffers are mmap'd once, at init time, and
 // reused for the lifetime of the buffer to avoid mmap/munmap syscalls on the
@@ -364,7 +366,6 @@ void _mpp_core_periodic_checks()
    //uCrtX += 20;
    //type_drm_object_info* pPlaneInfo = ruby_drm_get_plane_info();
    //ruby_drm_set_object_property(pPlaneInfo, "CRTC_X", uCrtX);
-   _mpp_core_update_histogram();
 }
 
 void* _mpp_thread_update_display(void *param)
@@ -504,6 +505,11 @@ void* _mpp_thread_frame_decode(void *param)
             {
                g_uTimeMPPPeriodicChecks = uTimeNow;
                _mpp_core_periodic_checks();
+            }
+            if ( uTimeNow > g_uTimeLastHistogramUpdate + HISTOGRAM_UPDATE_INTERVAL_MS )
+            {
+               g_uTimeLastHistogramUpdate = uTimeNow;
+               _mpp_core_update_histogram();
             }
          }
       }

@@ -1002,6 +1002,7 @@ int main(int argc, char *argv[])
    if ( ! is_audio_processing_started() )
       init_processing_audio();
 
+   set_CorePluginsRuntimeLocation(CORE_PLUGIN_RUNTIME_LOCATION_CONTROLLER);
    load_CorePlugins(0);
 
    radio_duplicate_detection_init();

@@ -16,6 +16,14 @@ code/r_start/ruby_start.o: code/r_start/ruby_start.cpp \
  code/r_start/../base/hardware_radio.h \
  code/r_start/../base/hardware_radio_txpower.h \
  code/r_start/../base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
  code/r_start/../base/../radio/ieee80211_radiotap.h \
  code/r_start/../base/models.h code/r_start/../base/hardware.h \
  code/r_start/../base/hardware_radio_sik.h \
@@ -29,11 +37,7 @@ code/r_start/ruby_start.o: code/r_start/ruby_start.cpp \
  code/r_start/../base/hardware_radio_serial.h \
  code/r_start/../base/vehicle_settings.h \
  code/r_start/../radio/radioflags.h code/r_start/../base/ruby_ipc.h \
- code/r_start/../base/tx_powers.h code/r_start/../base/ctrl_settings.h \
- code/r_start/../base/../base/ctrl_preferences.h \
- code/r_start/../utils/utils_controller.h \
- code/r_start/../base/ctrl_interfaces.h \
- code/r_start/../common/string_utils.h \
+ code/r_start/../base/tx_powers.h code/r_start/../common/string_utils.h \
  code/r_start/../common/strings_loc.h code/r_start/r_start_vehicle.h \
  code/r_start/r_initradio.h code/r_start/../r_vehicle/ruby_rx_commands.h \
  code/r_start/../r_vehicle/ruby_rx_rc.h code/r_start/first_boot.h \
@@ -61,6 +65,14 @@ code/r_start/../base/shared_mem_radio.h:
 code/r_start/../base/hardware_radio.h:
 code/r_start/../base/hardware_radio_txpower.h:
 code/r_start/../base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/r_start/../base/../radio/ieee80211_radiotap.h:
 code/r_start/../base/models.h:
 code/r_start/../base/hardware.h:
@@ -78,10 +90,6 @@ code/r_start/../base/vehicle_settings.h:
 code/r_start/../radio/radioflags.h:
 code/r_start/../base/ruby_ipc.h:
 code/r_start/../base/tx_powers.h:
-code/r_start/../base/ctrl_settings.h:
-code/r_start/../base/../base/ctrl_preferences.h:
-code/r_start/../utils/utils_controller.h:
-code/r_start/../base/ctrl_interfaces.h:
 code/r_start/../common/string_utils.h:
 code/r_start/../common/strings_loc.h:
 code/r_start/r_start_vehicle.h:

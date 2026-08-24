@@ -14,6 +14,14 @@ code/r_vehicle/process_calib_file.o: \
  code/r_vehicle/../base/../base/../base/hardware_radio.h \
  code/r_vehicle/../base/../base/../base/hardware_radio_txpower.h \
  code/r_vehicle/../base/../base/../base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
  code/r_vehicle/../base/../base/../base/../radio/ieee80211_radiotap.h \
  code/r_vehicle/../base/../base/../base/../radio/radiopackets2.h \
  code/r_vehicle/../base/../base/../base/../radio/../public/telemetry_info.h \
@@ -26,6 +34,7 @@ code/r_vehicle/process_calib_file.o: \
  code/r_vehicle/../base/../base/../base/hardware_i2c.h \
  code/r_vehicle/../base/../base/../base/../public/i2c_protocols.h \
  code/r_vehicle/../base/../base/../base/hardware_serial.h \
+ code/r_vehicle/../base/../base/../public/ruby_core_plugin.h \
  code/r_vehicle/../base/hardware_files.h \
  code/r_vehicle/../base/hardware_procs.h \
  code/r_vehicle/../base/ruby_ipc.h code/r_vehicle/process_calib_file.h \
@@ -59,6 +68,14 @@ code/r_vehicle/../base/../base/../base/hardware.h:
 code/r_vehicle/../base/../base/../base/hardware_radio.h:
 code/r_vehicle/../base/../base/../base/hardware_radio_txpower.h:
 code/r_vehicle/../base/../base/../base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/r_vehicle/../base/../base/../base/../radio/ieee80211_radiotap.h:
 code/r_vehicle/../base/../base/../base/../radio/radiopackets2.h:
 code/r_vehicle/../base/../base/../base/../radio/../public/telemetry_info.h:
@@ -71,6 +88,7 @@ code/r_vehicle/../base/../base/../base/../base/shared_mem_radio.h:
 code/r_vehicle/../base/../base/../base/hardware_i2c.h:
 code/r_vehicle/../base/../base/../base/../public/i2c_protocols.h:
 code/r_vehicle/../base/../base/../base/hardware_serial.h:
+code/r_vehicle/../base/../base/../public/ruby_core_plugin.h:
 code/r_vehicle/../base/hardware_files.h:
 code/r_vehicle/../base/hardware_procs.h:
 code/r_vehicle/../base/ruby_ipc.h:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../base/hardware.h"
+#include "../public/ruby_core_plugin.h"
 
 #define CORE_PLUGINS_SETTINGS_STAMP_ID "vVII.0"
 
@@ -39,6 +40,11 @@ typedef struct
 int save_CorePluginsSettings();
 int load_CorePluginsSettings();
 void reset_CorePluginsSettings();
+
+// Must be called with CORE_PLUGIN_RUNTIME_LOCATION_VEHICLE or
+// CORE_PLUGIN_RUNTIME_LOCATION_CONTROLLER (see ../public/ruby_core_plugin.h)
+// before load_CorePlugins(), so core_plugin_init() is told the correct location.
+void set_CorePluginsRuntimeLocation(u32 uRuntimeLocation);
 
 CorePluginSettings* get_CorePluginSettings(char* szPluginGUID);
 

@@ -10,6 +10,14 @@ code/r_start/first_boot.o: code/r_start/first_boot.cpp \
  code/r_start/../base/hardware.h code/r_start/../base/hardware_radio.h \
  code/r_start/../base/hardware_radio_txpower.h \
  code/r_start/../base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
  code/r_start/../base/../radio/ieee80211_radiotap.h \
  code/r_start/../base/../radio/radiopackets2.h \
  code/r_start/../base/../radio/../public/telemetry_info.h \
@@ -49,6 +57,14 @@ code/r_start/../base/hardware.h:
 code/r_start/../base/hardware_radio.h:
 code/r_start/../base/hardware_radio_txpower.h:
 code/r_start/../base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/r_start/../base/../radio/ieee80211_radiotap.h:
 code/r_start/../base/../radio/radiopackets2.h:
 code/r_start/../base/../radio/../public/telemetry_info.h:

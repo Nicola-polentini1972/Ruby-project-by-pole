@@ -11,6 +11,14 @@ code/r_start/r_initradio.o: code/r_start/r_initradio.cpp \
  code/r_start/../base/hardware.h code/r_start/../base/hardware_radio.h \
  code/r_start/../base/hardware_radio_txpower.h \
  code/r_start/../base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
  code/r_start/../base/../radio/ieee80211_radiotap.h \
  code/r_start/../base/../radio/radiopackets2.h \
  code/r_start/../base/../radio/../public/telemetry_info.h \
@@ -24,9 +32,6 @@ code/r_start/r_initradio.o: code/r_start/r_initradio.cpp \
  code/r_start/../base/../public/i2c_protocols.h \
  code/r_start/../base/hardware_serial.h \
  code/r_start/../base/hardware_procs.h code/r_start/../base/radio_utils.h \
- code/r_start/../base/ctrl_interfaces.h \
- code/r_start/../base/ctrl_settings.h \
- code/r_start/../base/../base/ctrl_preferences.h \
  code/r_start/../common/string_utils.h
 code/r_start/r_initradio.h:
 code/r_start/../base/base.h:
@@ -47,6 +52,14 @@ code/r_start/../base/hardware.h:
 code/r_start/../base/hardware_radio.h:
 code/r_start/../base/hardware_radio_txpower.h:
 code/r_start/../base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/r_start/../base/../radio/ieee80211_radiotap.h:
 code/r_start/../base/../radio/radiopackets2.h:
 code/r_start/../base/../radio/../public/telemetry_info.h:
@@ -61,7 +74,4 @@ code/r_start/../base/../public/i2c_protocols.h:
 code/r_start/../base/hardware_serial.h:
 code/r_start/../base/hardware_procs.h:
 code/r_start/../base/radio_utils.h:
-code/r_start/../base/ctrl_interfaces.h:
-code/r_start/../base/ctrl_settings.h:
-code/r_start/../base/../base/ctrl_preferences.h:
 code/r_start/../common/string_utils.h:

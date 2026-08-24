@@ -6,7 +6,16 @@ code/base/ctrl_interfaces.o: code/base/ctrl_interfaces.cpp \
  code/base/config_radio.h code/base/config_video.h \
  code/base/config_timers.h code/base/hardware.h \
  code/base/hardware_radio.h code/base/hardware_radio_txpower.h \
- code/base/../radio/radiotap.h code/base/../radio/ieee80211_radiotap.h \
+ code/base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
+ code/base/../radio/ieee80211_radiotap.h \
  code/base/../radio/radiopackets2.h \
  code/base/../radio/../public/telemetry_info.h \
  code/base/../radio/local_packets.h \
@@ -36,6 +45,14 @@ code/base/hardware.h:
 code/base/hardware_radio.h:
 code/base/hardware_radio_txpower.h:
 code/base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/base/../radio/ieee80211_radiotap.h:
 code/base/../radio/radiopackets2.h:
 code/base/../radio/../public/telemetry_info.h:

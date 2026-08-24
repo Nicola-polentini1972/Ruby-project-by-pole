@@ -3351,6 +3351,14 @@ int r_start_commands_rx(int argc, char* argv[])
    process_sw_upload_init();
    process_calibration_files_init();
 
+   // Load any core plugins already present on disk (e.g. installed manually or
+   // surviving from a previous boot), mirroring what ruby_rt_station.cpp does
+   // unconditionally at its own startup. Without this, a core plugin file sitting
+   // in FOLDER_CORE_PLUGINS is only ever loaded in response to a fresh "upload
+   // plugin archive" command from the controller, never automatically at boot.
+   set_CorePluginsRuntimeLocation(CORE_PLUGIN_RUNTIME_LOCATION_VEHICLE);
+   load_CorePlugins(0);
+
    s_InfoLastFileUploaded.uLastFileId = MAX_U32;
    s_InfoLastFileUploaded.szFileName[0] = 0;
    s_InfoLastFileUploaded.uFileSize = 0;

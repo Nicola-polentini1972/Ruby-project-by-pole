@@ -18,6 +18,14 @@ code/r_vehicle/ruby_rx_commands.o: code/r_vehicle/ruby_rx_commands.cpp \
  code/r_vehicle/../base/hardware_radio.h \
  code/r_vehicle/../base/hardware_radio_txpower.h \
  code/r_vehicle/../base/../radio/radiotap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h \
+ /home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h \
  code/r_vehicle/../base/../radio/ieee80211_radiotap.h \
  code/r_vehicle/../radio/radiolink.h \
  code/r_vehicle/../radio/../base/hardware.h \
@@ -29,6 +37,7 @@ code/r_vehicle/ruby_rx_commands.o: code/r_vehicle/ruby_rx_commands.cpp \
  code/r_vehicle/../base/hardware_procs.h \
  code/r_vehicle/../base/commands.h \
  code/r_vehicle/../base/../base/core_plugins_settings.h \
+ code/r_vehicle/../base/../base/../public/ruby_core_plugin.h \
  code/r_vehicle/../base/models.h code/r_vehicle/../base/models_list.h \
  code/r_vehicle/../base/radio_utils.h \
  code/r_vehicle/../base/hardware_files.h \
@@ -74,6 +83,14 @@ code/r_vehicle/../base/shared_mem_radio.h:
 code/r_vehicle/../base/hardware_radio.h:
 code/r_vehicle/../base/hardware_radio_txpower.h:
 code/r_vehicle/../base/../radio/radiotap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/funcattrs.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/compiler-tests.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/pcap-inttypes.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/socket.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/bpf.h:
+/home/pole/toolchains/src/libpcap-1.10.5/pcap/dlt.h:
 code/r_vehicle/../base/../radio/ieee80211_radiotap.h:
 code/r_vehicle/../radio/radiolink.h:
 code/r_vehicle/../radio/../base/hardware.h:
@@ -85,6 +102,7 @@ code/r_vehicle/../radio/radioflags.h:
 code/r_vehicle/../base/hardware_procs.h:
 code/r_vehicle/../base/commands.h:
 code/r_vehicle/../base/../base/core_plugins_settings.h:
+code/r_vehicle/../base/../base/../public/ruby_core_plugin.h:
 code/r_vehicle/../base/models.h:
 code/r_vehicle/../base/models_list.h:
 code/r_vehicle/../base/radio_utils.h:

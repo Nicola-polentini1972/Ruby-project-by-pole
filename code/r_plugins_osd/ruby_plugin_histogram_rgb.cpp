@@ -6,11 +6,12 @@
 // no API to read back live video pixels, so this plugin can't sample the video feed
 // by itself. It gets histogram data from two possible sources, in priority order:
 //
-//  1. Live data: HISTOGRAM_LIVE_FILE_PATH, a small binary file written every
-//     HISTOGRAM_UPDATE_INTERVAL_MS by the controller's own video decoder
-//     (code/r_player/mpp_core.cpp), which samples the already-decoded NV12
-//     frame directly. Used only while "fresh" (updated in the last
-//     HISTOGRAM_LIVE_STALE_SECONDS).
+//  1. Live data: HISTOGRAM_LIVE_FILE_PATH, a small binary file periodically
+//     (re)written by the companion core plugin
+//     (code/r_plugins_core/ruby_core_plugin_histogram_rgb.cpp), which captures
+//     frames from the vehicle's camera via V4L2 and streams the computed bins to
+//     the controller over the radio data channel. Used only while "fresh"
+//     (updated in the last HISTOGRAM_LIVE_STALE_SECONDS).
 //  2. Static image: HISTOGRAM_IMAGE_PATH, a 24 bit binary PPM (P6) file, useful
 //     for testing without the core plugin / radio link.
 //
@@ -34,7 +35,7 @@
 #define HISTOGRAM_IMAGE_PATH "/home/radxa/ruby/media/histogram_source.ppm"
 #define HISTOGRAM_LIVE_FILE_PATH "/home/radxa/ruby/tmp/histogram_live.bin"
 #define HISTOGRAM_LIVE_STALE_SECONDS 5
-#define HISTOGRAM_RECHECK_INTERVAL_MS 300
+#define HISTOGRAM_RECHECK_INTERVAL_SECONDS 3
 #define HISTOGRAM_MAX_BINS 64
 #define HISTOGRAM_LIVE_MAGIC 0x52474248u // 'RGBH', must match the core plugin
 
@@ -64,15 +65,8 @@ static int s_nHistG[256];
 static int s_nHistB[256];
 static bool s_bHaveRealHistogram = false;
 static bool s_bUsingLiveData = false;
-static long s_lLastCheckTimeMs = 0;
+static time_t s_tLastCheckTime = 0;
 static time_t s_tLastFileMTime = 0;
-
-static long _get_time_ms()
-{
-   struct timespec ts;
-   clock_gettime(CLOCK_MONOTONIC, &ts);
-   return (long)ts.tv_sec*1000 + ts.tv_nsec/1000000;
-}
 
 #ifdef __cplusplus
 extern "C" {
@@ -207,10 +201,10 @@ static bool _try_load_live_histogram()
 
 static void _maybe_reload_histogram()
 {
-   long lNowMs = _get_time_ms();
-   if ( (lNowMs - s_lLastCheckTimeMs) < HISTOGRAM_RECHECK_INTERVAL_MS )
+   time_t tNow = time(NULL);
+   if ( (tNow - s_tLastCheckTime) < HISTOGRAM_RECHECK_INTERVAL_SECONDS )
       return;
-   s_lLastCheckTimeMs = lNowMs;
+   s_tLastCheckTime = tNow;
 
    if ( _try_load_live_histogram() )
    {
@@ -246,7 +240,7 @@ void init(void* pEngine)
    _generate_fallback_histogram();
    s_bHaveRealHistogram = false;
    s_bUsingLiveData = false;
-   s_lLastCheckTimeMs = 0;
+   s_tLastCheckTime = 0;
    s_tLastFileMTime = 0;
 }
 
@@ -325,11 +319,9 @@ char* getPluginSettingOptionName(int settingIndex, int optionIndex)
 
 float getDefaultWidth()
 {
-   // Wide enough for 3 equal legend columns each holding a swatch + "X 255" in the
-   // Regular font (worst case: all three peaks are 3-digit values) without overlapping.
    if ( NULL == g_pEngine )
-      return 0.44;
-   return 0.44/g_pEngine->getAspectRatio();
+      return 0.32;
+   return 0.32/g_pEngine->getAspectRatio();
 }
 
 float getDefaultHeight()
@@ -362,27 +354,12 @@ void render(vehicle_and_telemetry_info_t* pTelemetryInfo, plugin_settings_info_t
 
    // Legend (top area of the widget)
 
-   // Small font renders the peak value's digits too thin/faint to read at this widget's
-   // default size, even though the leading channel letter stays recognizable; use Regular.
-   u32 fontId = g_pEngine->getFontIdRegular();
+   u32 fontId = g_pEngine->getFontIdSmall();
    float fTextH = g_pEngine->textHeight(fontId);
-   // Keep the color swatch compact (tied to the small font) instead of scaling it up with
-   // the now-bigger label font, so it doesn't eat into the column space the text needs.
-   float fLegendBoxSize = g_pEngine->textHeight(g_pEngine->getFontIdSmall())*0.7;
 
    float fLegendY = yPos + fHeight*0.04;
-   float fLegendColumnW = fWidth/3.0;
-
-   // Peak brightness level (0-255) per channel, i.e. where each histogram tops out
-
-   int nPeakLevel[3] = {0,0,0};
-   int nPeakCount[3] = {s_nHistR[0], s_nHistG[0], s_nHistB[0]};
-   for( int i=1; i<256; i++ )
-   {
-      if ( s_nHistR[i] > nPeakCount[0] ) { nPeakCount[0] = s_nHistR[i]; nPeakLevel[0] = i; }
-      if ( s_nHistG[i] > nPeakCount[1] ) { nPeakCount[1] = s_nHistG[i]; nPeakLevel[1] = i; }
-      if ( s_nHistB[i] > nPeakCount[2] ) { nPeakCount[2] = s_nHistB[i]; nPeakLevel[2] = i; }
-   }
+   float fLegendBoxSize = fTextH*0.7;
+   float fLegendX = xPos + fWidth*0.04;
 
    const char* szLabels[3] = {"R","G","B"};
    double dColors[3][4] = {
@@ -392,22 +369,22 @@ void render(vehicle_and_telemetry_info_t* pTelemetryInfo, plugin_settings_info_t
    };
    for( int c=0; c<3; c++ )
    {
-      char szLabel[16];
-      snprintf(szLabel, sizeof(szLabel), "%s %d", szLabels[c], nPeakLevel[c]);
-
-      // Fixed column per channel (not cascaded off the previous label's width) so a wide
-      // peak value (e.g. "B 255") can never push the next channel's label out of the widget.
-      float fLegendX = xPos + fWidth*0.04 + c*fLegendColumnW;
-
       g_pEngine->setFill(dColors[c][0], dColors[c][1], dColors[c][2], dColors[c][3]);
       g_pEngine->setStroke(0,0,0,0);
       g_pEngine->setStrokeSize(0.0);
       g_pEngine->drawRect(fLegendX, fLegendY, fLegendBoxSize, fLegendBoxSize);
       g_pEngine->setColors(g_pEngine->getColorOSDText());
-      // Same "y = vertical center - half text height" idiom used by the built-in gauge
-      // plugins (e.g. ruby_plugin_gauge_altitude.cpp), not an ad hoc offset, so the number
-      // glyphs get their full height instead of being clipped at the row edge.
-      g_pEngine->drawText(fLegendX + fLegendBoxSize*1.4, fLegendY + fLegendBoxSize*0.5 - fTextH*0.5, fontId, szLabel);
+      g_pEngine->drawText(fLegendX + fLegendBoxSize*1.4, fLegendY - fTextH*0.15, fontId, szLabels[c]);
+      fLegendX += fLegendBoxSize*1.4 + g_pEngine->textWidth(fontId, szLabels[c]) + fWidth*0.03;
+   }
+
+   if ( s_bUsingLiveData )
+   {
+      const char* szLive = "LIVE";
+      float wLive = g_pEngine->textWidth(fontId, szLive);
+      double dLiveColor[4] = {80,240,120,0.95};
+      g_pEngine->setColors(dLiveColor);
+      g_pEngine->drawText(xPos + fWidth - fWidth*0.04 - wLive, fLegendY - fTextH*0.15, fontId, szLive);
    }
 
    // Plot area (below the legend)

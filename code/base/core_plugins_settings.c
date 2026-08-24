@@ -45,6 +45,15 @@
 
 int s_CorePluginsSettingsLoaded = 0;
 
+// Defaults to CONTROLLER to preserve prior behavior for any caller that does not
+// explicitly call set_CorePluginsRuntimeLocation() before loading plugins.
+u32 s_uCorePluginsRuntimeLocation = CORE_PLUGIN_RUNTIME_LOCATION_CONTROLLER;
+
+void set_CorePluginsRuntimeLocation(u32 uRuntimeLocation)
+{
+   s_uCorePluginsRuntimeLocation = uRuntimeLocation;
+}
+
 CorePluginRuntimeInfo s_CorePluginsRuntimeInfo[MAX_CORE_PLUGINS_COUNT];
 int s_iCorePluginsRuntimeCount = 0;
 
@@ -298,7 +307,7 @@ int _load_CorePlugin(char* szFileName, int iEnumerateOnly)
    }
 
    if ( ! iEnumerateOnly )
-      (*(s_CorePluginsRuntimeInfo[s_iCorePluginsRuntimeCount].pFunctionCoreInit))(CORE_PLUGIN_RUNTIME_LOCATION_CONTROLLER, uRequestedCapabilities);
+      (*(s_CorePluginsRuntimeInfo[s_iCorePluginsRuntimeCount].pFunctionCoreInit))(s_uCorePluginsRuntimeLocation, uRequestedCapabilities);
    else
    {
       dlclose(s_CorePluginsRuntimeInfo[s_iCorePluginsRuntimeCount].pLibrary);

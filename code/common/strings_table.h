@@ -13,6 +13,7 @@ typedef struct
    const char* szTranslatedHI;
    const char* szTranslatedRU;
    const char* szTranslatedSP;
+   const char* szTranslatedIT;
    u32 uHash;
 } type_localized_strings;
 

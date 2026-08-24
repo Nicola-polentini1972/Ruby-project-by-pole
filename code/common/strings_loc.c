@@ -44,7 +44,7 @@ static u16 s_HashTableDynamicStrings[STRINGS_HASH_SIZE];
 static u16 s_HashTableLocStrings[STRINGS_HASH_SIZE];
 
 
-static const char* s_szLanguages[] = { "Chinese", "English", "French", "German", "Hindi", "Russian", "Spanish" };
+static const char* s_szLanguages[] = { "Chinese", "English", "French", "German", "Hindi", "Russian", "Spanish", "Italian" };
 static const char* s_szStringTableEmptyText = "";
 static const char* s_szStringTableMissingText = "missing text";
 static int s_iActiveLanguage = 1;
@@ -199,6 +199,8 @@ const char* L(const char* szString)
              pLocalized = pStringsTable[s_HashTableLocStrings[uHashIndex]].szTranslatedRU;
           if (6 == s_iActiveLanguage )
              pLocalized = pStringsTable[s_HashTableLocStrings[uHashIndex]].szTranslatedSP;
+          if (7 == s_iActiveLanguage )
+             pLocalized = pStringsTable[s_HashTableLocStrings[uHashIndex]].szTranslatedIT;
           break;
        }
        uHashIndex++;

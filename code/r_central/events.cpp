@@ -750,7 +750,7 @@ bool _onEventCheckNewlyPairedModelForUIActionsToTake()
       getSystemVersionString(szBuff2, s_pEventsLastRecvModelSettings->sw_version);
       getSystemVersionString(szBuff3, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
       strcpy(szBuff4, s_pEventsLastRecvModelSettings->getVehicleTypeString());
-      snprintf(szBuff, sizeof(szBuff)/sizeof(szBuff[0]), "%s has Ruby version %s (b-%u) and your controller %s (b-%u). You should update your controller.", szBuff4, szBuff2, get_sw_version_build(s_pEventsLastRecvModelSettings), szBuff3, SYSTEM_SW_BUILD_NUMBER);
+      snprintf(szBuff, sizeof(szBuff)/sizeof(szBuff[0]), "%s has Ruby version %s (b-%u) and your controller %s.%u-p. You should update your controller.", szBuff4, szBuff2, get_sw_version_build(s_pEventsLastRecvModelSettings), szBuff3, SYSTEM_SW_VERSION_PATCH);
       szBuff[0] = toupper(szBuff[0]);
       warnings_add(s_pEventsLastRecvModelSettings->uVehicleId, szBuff, 0, NULL, 10);
       MenuConfirmation* pMC = new MenuConfirmation(L("Update Info"), szBuff, 0, true);
@@ -780,7 +780,7 @@ bool _onEventCheckNewlyPairedModelForUIActionsToTake()
       getSystemVersionString(szBuff2, s_pEventsLastRecvModelSettings->sw_version);
       getSystemVersionString(szBuff3, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
       strcpy(szBuff4, s_pEventsLastRecvModelSettings->getVehicleTypeString());
-      snprintf(szBuff, sizeof(szBuff)/sizeof(szBuff[0]), L("%s has Ruby version %s (b-%u) and your controller %s (b-%u). You should update your %s."), szBuff4, szBuff2, get_sw_version_build(s_pEventsLastRecvModelSettings), szBuff3, SYSTEM_SW_BUILD_NUMBER, szBuff4);
+      snprintf(szBuff, sizeof(szBuff)/sizeof(szBuff[0]), L("%s has Ruby version %s (b-%u) and your controller %s.%u-p. You should update your %s."), szBuff4, szBuff2, get_sw_version_build(s_pEventsLastRecvModelSettings), szBuff3, SYSTEM_SW_VERSION_PATCH, szBuff4);
       szBuff[0] = toupper(szBuff[0]);
       warnings_add(s_pEventsLastRecvModelSettings->uVehicleId, szBuff, 0, NULL, 12);
       bool bArmed = false;
@@ -1193,7 +1193,7 @@ bool onEventReceivedModelSettings(u32 uVehicleId, u8* pBuffer, int length, bool 
    else
       warnings_add(pCurrentlyStoredModel->uVehicleId, L("Synchronized vehicle settings."), g_idIconCheckOK);
 
-   log_line("The currently stored vehicle has Ruby version %d.%d (b-%d) and the controller %d.%d (b-%d)", get_sw_version_major(pCurrentlyStoredModel), get_sw_version_minor(pCurrentlyStoredModel), get_sw_version_build(pCurrentlyStoredModel), SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER );
+   log_line("The currently stored vehicle has Ruby version %d.%d (b-%d) and the controller %d.%d.%d-p", get_sw_version_major(pCurrentlyStoredModel), get_sw_version_minor(pCurrentlyStoredModel), get_sw_version_build(pCurrentlyStoredModel), SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH );
 
    bool bOldIsSpectator = pCurrentlyStoredModel->is_spectator;
    osd_parameters_t oldOSDParams;

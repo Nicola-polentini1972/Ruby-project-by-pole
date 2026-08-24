@@ -465,7 +465,7 @@ float MenuSystemAllParams::renderSoftware(float xPos, float yPos, float width, f
 
    g_pRenderEngine->setColors(get_Color_MenuText());
 
-   snprintf(szBuff, 63, "Controller version %d.%d (b-%d)", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+   snprintf(szBuff, 63, "Controller version %d.%d.%d-p", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
    if ( NULL == g_pCurrentModel )
       strncpy(szBuff2, "No vehicle", 63);
    else

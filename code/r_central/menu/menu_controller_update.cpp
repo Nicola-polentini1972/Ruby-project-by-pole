@@ -167,7 +167,7 @@ void MenuControllerUpdate::onSelectItem()
       char szBuff2[64];
       getSystemVersionString(szBuff2, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
 
-      sprintf(szBuff, "Your controller has software version %s (b-%d)", szBuff2, SYSTEM_SW_BUILD_NUMBER);
+      sprintf(szBuff, "Your controller has software version %s.%d-p", szBuff2, SYSTEM_SW_VERSION_PATCH);
 
       MenuConfirmation* pMC = new MenuConfirmation(L("Update Controller Software"), L("Insert an USB stick containing the Ruby update archive file and then press Ok to start the update process."), 1, true);
       pMC->m_yPos = 0.3;

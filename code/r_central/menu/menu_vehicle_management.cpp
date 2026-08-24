@@ -389,7 +389,7 @@ void MenuVehicleManagement::onSelectItem()
       char szBuff[512];
       char szBuff3[64];
       getSystemVersionString(szBuff3, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
-      sprintf(szBuff, "Your %s has software version %s (b-%d) and software version %s (b-%d) is available on the controller. Do you want to upgrade?", g_pCurrentModel->getVehicleTypeString(), szBuff2, (int)get_sw_version_build(g_pCurrentModel), szBuff3, SYSTEM_SW_BUILD_NUMBER);
+      sprintf(szBuff, "Your %s has software version %s (b-%d) and software version %s.%d-p is available on the controller. Do you want to upgrade?", g_pCurrentModel->getVehicleTypeString(), szBuff2, (int)get_sw_version_build(g_pCurrentModel), szBuff3, SYSTEM_SW_VERSION_PATCH);
       MenuConfirmation* pMC = new MenuConfirmation( L("Upgrade Confirmation"), szBuff, 2);
       add_menu_to_stack(pMC);
    }

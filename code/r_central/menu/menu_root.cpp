@@ -108,7 +108,7 @@ void MenuRoot::addItems()
       m_iIndexVehicle = addMenuItem(new MenuItem(L("Vehicle settings"), L("Change vehicle settings.")));
    else
       m_iIndexVehicle = -1;
-   m_iIndexController = addMenuItem(new MenuItem(L("Controller settings"), L("Change controller settings and user interface preferences.")));
+   m_iIndexController = addMenuItem(new MenuItem(L("Controller Settings"), L("Change controller settings and user interface preferences.")));
    m_iIndexSystem = addMenuItem(new MenuItem(L("System"), L("Configure system options, shows detailed information about the system.")));
    addSeparator();
    m_iIndexMedia = addMenuItem(new MenuItem(L("Media & Storage"), L("Manage saved logs, screenshots and videos.")));
@@ -117,7 +117,7 @@ void MenuRoot::addItems()
    char szBuff[256];
    char szBuff2[64];
    getSystemVersionString(szBuff2, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
-   sprintf(szBuff, "Version %s (b-%d)", szBuff2, SYSTEM_SW_BUILD_NUMBER);
+   sprintf(szBuff, "Version %s.%d-p", szBuff2, SYSTEM_SW_VERSION_PATCH);
 
    addMenuItem(new MenuItemText(szBuff, true, 0.01 * Menu::getScaleFactor()));
    sprintf(szBuff, "Running on: %s", str_get_hardware_board_name_short(hardware_getBoardType()));

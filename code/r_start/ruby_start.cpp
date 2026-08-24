@@ -663,7 +663,7 @@ int _step_process_cmd_line(int argc, char* argv[])
 {
    if ( strcmp(argv[argc-1], "-ver") == 0 )
    {
-      printf("%d.%d (b-%d) ", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+      printf("%d.%d.%d-p ", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
       _log_platform(false);
       return 1;
    }
@@ -826,7 +826,7 @@ int _step_find_console()
    s_pSemaphoreStarted = sem_open("/RUBY_STARTED_SEMAPHORE", O_CREAT | O_EXCL, S_IWUSR | S_IRUSR, 0);
    if ( ((SEM_FAILED == s_pSemaphoreStarted) || (NULL == s_pSemaphoreStarted)) && (!g_bDebug) )
    {
-      printf("\nRuby (v %d.%d b-%d) is starting...\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+      printf("\nRuby (v %d.%d.%d-p) is starting...\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
       fflush(stdout);
       sleep(8);
       return 0;
@@ -1139,8 +1139,8 @@ void _step_check_binaries_and_resources()
    _log_openipc_info();
    #endif
 
-   log_line("Ruby: Start on verison %d.%d (b-%d)", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
-   printf("Ruby: Start on verison %d.%d (b-%d)\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+   log_line("Ruby: Start on verison %d.%d.%d-p", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
+   printf("Ruby: Start on verison %d.%d.%d-p\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
    fflush(stdout);
 
    int iMajor, iMinor;
@@ -1548,7 +1548,7 @@ int main(int argc, char *argv[])
 
    log_line_forced_to_file("Found good console. Continuing...");
    log_arguments(argc, argv);
-   printf("\nRuby: Start (v %d.%d b-%d) r%d\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER, s_iBootCount);
+   printf("\nRuby: Start (v %d.%d.%d-p) r%d\n", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH, s_iBootCount);
    fflush(stdout);
 
    if ( g_bDebug )

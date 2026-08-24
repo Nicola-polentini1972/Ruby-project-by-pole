@@ -325,9 +325,11 @@ char* getPluginSettingOptionName(int settingIndex, int optionIndex)
 
 float getDefaultWidth()
 {
+   // Wide enough for 3 equal legend columns each holding a swatch + "X 255" in the
+   // Regular font (worst case: all three peaks are 3-digit values) without overlapping.
    if ( NULL == g_pEngine )
-      return 0.32;
-   return 0.32/g_pEngine->getAspectRatio();
+      return 0.44;
+   return 0.44/g_pEngine->getAspectRatio();
 }
 
 float getDefaultHeight()
@@ -360,12 +362,16 @@ void render(vehicle_and_telemetry_info_t* pTelemetryInfo, plugin_settings_info_t
 
    // Legend (top area of the widget)
 
-   u32 fontId = g_pEngine->getFontIdSmall();
+   // Small font renders the peak value's digits too thin/faint to read at this widget's
+   // default size, even though the leading channel letter stays recognizable; use Regular.
+   u32 fontId = g_pEngine->getFontIdRegular();
    float fTextH = g_pEngine->textHeight(fontId);
+   // Keep the color swatch compact (tied to the small font) instead of scaling it up with
+   // the now-bigger label font, so it doesn't eat into the column space the text needs.
+   float fLegendBoxSize = g_pEngine->textHeight(g_pEngine->getFontIdSmall())*0.7;
 
    float fLegendY = yPos + fHeight*0.04;
-   float fLegendBoxSize = fTextH*0.7;
-   float fLegendX = xPos + fWidth*0.04;
+   float fLegendColumnW = fWidth/3.0;
 
    // Peak brightness level (0-255) per channel, i.e. where each histogram tops out
 
@@ -389,22 +395,19 @@ void render(vehicle_and_telemetry_info_t* pTelemetryInfo, plugin_settings_info_t
       char szLabel[16];
       snprintf(szLabel, sizeof(szLabel), "%s %d", szLabels[c], nPeakLevel[c]);
 
+      // Fixed column per channel (not cascaded off the previous label's width) so a wide
+      // peak value (e.g. "B 255") can never push the next channel's label out of the widget.
+      float fLegendX = xPos + fWidth*0.04 + c*fLegendColumnW;
+
       g_pEngine->setFill(dColors[c][0], dColors[c][1], dColors[c][2], dColors[c][3]);
       g_pEngine->setStroke(0,0,0,0);
       g_pEngine->setStrokeSize(0.0);
       g_pEngine->drawRect(fLegendX, fLegendY, fLegendBoxSize, fLegendBoxSize);
       g_pEngine->setColors(g_pEngine->getColorOSDText());
-      g_pEngine->drawText(fLegendX + fLegendBoxSize*1.4, fLegendY - fTextH*0.15, fontId, szLabel);
-      fLegendX += fLegendBoxSize*1.4 + g_pEngine->textWidth(fontId, szLabel) + fWidth*0.03;
-   }
-
-   if ( s_bUsingLiveData )
-   {
-      const char* szLive = "LIVE";
-      float wLive = g_pEngine->textWidth(fontId, szLive);
-      double dLiveColor[4] = {80,240,120,0.95};
-      g_pEngine->setColors(dLiveColor);
-      g_pEngine->drawText(xPos + fWidth - fWidth*0.04 - wLive, fLegendY - fTextH*0.15, fontId, szLive);
+      // Same "y = vertical center - half text height" idiom used by the built-in gauge
+      // plugins (e.g. ruby_plugin_gauge_altitude.cpp), not an ad hoc offset, so the number
+      // glyphs get their full height instead of being clipped at the row edge.
+      g_pEngine->drawText(fLegendX + fLegendBoxSize*1.4, fLegendY + fLegendBoxSize*0.5 - fTextH*0.5, fontId, szLabel);
    }
 
    // Plot area (below the legend)

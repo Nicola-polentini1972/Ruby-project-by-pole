@@ -577,7 +577,7 @@ void log_arguments(int argc, char *argv[])
    #elif defined(HW_PLATFORM_RADXA)
    strcpy(szHWPlatform, "RadxaZero3");
    #endif
-   log_line_forced_to_file("Process version: %d.%d (b-%d) HW: %s", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER, szHWPlatform);
+   log_line_forced_to_file("Process version: %d.%d.%d-p HW: %s", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH, szHWPlatform);
    log_line_forced_to_file("Using logger service: %s", (s_logUseService!=0)?"yes":"no");
    if ( argc <= 0 )
    {

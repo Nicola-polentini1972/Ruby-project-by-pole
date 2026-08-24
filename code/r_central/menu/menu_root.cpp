@@ -117,7 +117,7 @@ void MenuRoot::addItems()
    char szBuff[256];
    char szBuff2[64];
    getSystemVersionString(szBuff2, (SYSTEM_SW_VERSION_MAJOR<<8) | SYSTEM_SW_VERSION_MINOR);
-   sprintf(szBuff, "Version %s (b-%d)", szBuff2, SYSTEM_SW_BUILD_NUMBER);
+   sprintf(szBuff, "Version %s.%d-p", szBuff2, SYSTEM_SW_VERSION_PATCH);
 
    addMenuItem(new MenuItemText(szBuff, true, 0.01 * Menu::getScaleFactor()));
    sprintf(szBuff, "Running on: %s", str_get_hardware_board_name_short(hardware_getBoardType()));

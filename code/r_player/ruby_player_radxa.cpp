@@ -955,7 +955,7 @@ int main(int argc, char *argv[])
 {
    if ( strcmp(argv[argc-1], "-ver") == 0 )
    {
-      printf("%d.%d (b-%d)", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+      printf("%d.%d.%d-p", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
       return 0;
    }
 

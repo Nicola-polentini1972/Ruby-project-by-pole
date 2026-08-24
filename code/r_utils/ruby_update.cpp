@@ -850,7 +850,7 @@ int main(int argc, char *argv[])
 {
    if ( strcmp(argv[argc-1], "-ver") == 0 )
    {
-      printf("%d.%d (b-%d)", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+      printf("%d.%d.%d-p", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
       return 0;
    }
 
@@ -962,7 +962,7 @@ int main(int argc, char *argv[])
       iMinor = iMinor/10;
 
    log_line("Applying update on existing version: %d.%d (b-%d)", iMajor, iMinor, iBuild);
-   log_line("Updating to version: %d.%d (b-%d)", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_BUILD_NUMBER);
+   log_line("Updating to version: %d.%d.%d-p", SYSTEM_SW_VERSION_MAJOR, SYSTEM_SW_VERSION_MINOR, SYSTEM_SW_VERSION_PATCH);
 
    do_generic_update();
 

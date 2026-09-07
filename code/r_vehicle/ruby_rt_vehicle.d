@@ -34,6 +34,7 @@ code/r_vehicle/ruby_rt_vehicle.o: code/r_vehicle/ruby_rt_vehicle.cpp \
  code/r_vehicle/../base/../base/../base/hardware_i2c.h \
  code/r_vehicle/../base/../base/../base/../public/i2c_protocols.h \
  code/r_vehicle/../base/../base/../base/hardware_serial.h \
+ code/r_vehicle/../base/../base/../public/ruby_core_plugin.h \
  code/r_vehicle/../base/hardware_procs.h \
  code/r_vehicle/../base/hardware_files.h code/r_vehicle/../base/models.h \
  code/r_vehicle/../base/models_list.h \
@@ -106,6 +107,7 @@ code/r_vehicle/../base/../base/../base/hardware_radio_sik.h:
 code/r_vehicle/../base/../base/../base/hardware_i2c.h:
 code/r_vehicle/../base/../base/../base/../public/i2c_protocols.h:
 code/r_vehicle/../base/../base/../base/hardware_serial.h:
+code/r_vehicle/../base/../base/../public/ruby_core_plugin.h:
 code/r_vehicle/../base/hardware_procs.h:
 code/r_vehicle/../base/hardware_files.h:
 code/r_vehicle/../base/models.h:

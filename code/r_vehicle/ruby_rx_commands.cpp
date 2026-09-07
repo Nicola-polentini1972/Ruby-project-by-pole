@@ -926,7 +926,7 @@ bool process_command(u8* pBuffer, int length)
          sendCommandReply(COMMAND_RESPONSE_FLAGS_FAILED, 0, 0);
          return true;
       }
-      log_line("Received onboard recording config: target: %d, quality: %d, bitrate: %u kbps", (int)pParams->uTarget, (int)pParams->uQualityIdx, pParams->uBitrateKbps);
+      log_line("Received onboard recording config: target: %d, quality: %d, bitrate: %u kbps, gop: %u.%us", (int)pParams->uTarget, (int)pParams->uQualityIdx, pParams->uBitrateKbps, (unsigned)(pParams->uGopTenths/10), (unsigned)(pParams->uGopTenths%10));
       sendCommandReply(COMMAND_RESPONSE_FLAGS_OK, 0, 0);
 
       if ( hwcam_be_get() != HWCAM_BE_WAYBEAM )
@@ -952,7 +952,11 @@ bool process_command(u8* pBuffer, int length)
          hw_execute_bash_command(szComm, NULL);
          hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.fps", "0", false);
          hw_execute_bash_command(szComm, NULL);
-         hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.gopSize", "1.0", false);
+         unsigned uGopTenths = pParams->uGopTenths;
+         if ( uGopTenths == 0 )
+            uGopTenths = 10; // default to 1.0s if an older controller didn't send a GOP value
+         sprintf(szValue, "%u.%u", uGopTenths/10, uGopTenths%10);
+         hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.gopSize", szValue, false);
          hw_execute_bash_command(szComm, NULL);
       }
       else

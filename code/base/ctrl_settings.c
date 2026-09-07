@@ -143,6 +143,7 @@ void reset_ControllerSettings()
 
    s_CtrlSettings.iRecordingTarget = 0;
    s_CtrlSettings.iOnboardRecordingQuality = 1;
+   s_CtrlSettings.iOnboardRecordingGopIdx = 1;
 
    if ( s_CtrlSettingsLoaded )
       log_line("Reseted controller settings.");
@@ -208,6 +209,7 @@ int save_ControllerSettings()
    fprintf(fd, "%d %d %d %d %d\n", s_CtrlSettings.iRecordOSD, s_CtrlSettings.iRecordSTR, s_CtrlSettings.iRecordSTRFramerate, s_CtrlSettings.iRecordSTRTime, s_CtrlSettings.iRecordSTRHome);
    fprintf(fd, "%d %d %d %d %d\n", s_CtrlSettings.iRecordSTRGPS, s_CtrlSettings.iRecordSTRAlt, s_CtrlSettings.iRecordSTRRSSI, s_CtrlSettings.iRecordSTRVoltage, s_CtrlSettings.iRecordSTRBitrate);
    fprintf(fd, "%d %d\n", s_CtrlSettings.iRecordingTarget, s_CtrlSettings.iOnboardRecordingQuality);
+   fprintf(fd, "%d\n", s_CtrlSettings.iOnboardRecordingGopIdx);
    fclose(fd);
 
    hardware_file_check_and_fix_access_c(szFile);
@@ -394,6 +396,11 @@ int load_ControllerSettings()
       s_CtrlSettings.iRecordingTarget = 0;
    if ( (s_CtrlSettings.iOnboardRecordingQuality < 0) || (s_CtrlSettings.iOnboardRecordingQuality > 3) )
       s_CtrlSettings.iOnboardRecordingQuality = 1;
+
+   if ( 1 != fscanf(fd, "%d", &s_CtrlSettings.iOnboardRecordingGopIdx) )
+      s_CtrlSettings.iOnboardRecordingGopIdx = 1;
+   if ( (s_CtrlSettings.iOnboardRecordingGopIdx < 0) || (s_CtrlSettings.iOnboardRecordingGopIdx > 3) )
+      s_CtrlSettings.iOnboardRecordingGopIdx = 1;
 
    fclose(fd);
 

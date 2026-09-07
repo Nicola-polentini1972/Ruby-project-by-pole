@@ -100,6 +100,7 @@ typedef struct
 
    int iRecordingTarget; // 0 - ground (classic DVR), 1 - onboard SD (waybeam only), 2 - both
    int iOnboardRecordingQuality; // 0..3 quality preset index (8/16/25/40 Mbps)
+   int iOnboardRecordingGopIdx; // 0..3 GOP preset index (0.5/1.0/2.0/4.0 seconds)
 } ControllerSettings;
 
 int save_ControllerSettings();

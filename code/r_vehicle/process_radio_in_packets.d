@@ -36,6 +36,7 @@ code/r_vehicle/process_radio_in_packets.o: \
  code/r_vehicle/../base/hardware_serial.h \
  code/r_vehicle/../base/commands.h \
  code/r_vehicle/../base/../base/core_plugins_settings.h \
+ code/r_vehicle/../base/../base/../public/ruby_core_plugin.h \
  code/r_vehicle/../base/hardware_procs.h \
  code/r_vehicle/../base/radio_utils.h code/r_vehicle/../base/ruby_ipc.h \
  code/r_vehicle/../common/radio_stats.h \
@@ -96,6 +97,7 @@ code/r_vehicle/../base/../public/i2c_protocols.h:
 code/r_vehicle/../base/hardware_serial.h:
 code/r_vehicle/../base/commands.h:
 code/r_vehicle/../base/../base/core_plugins_settings.h:
+code/r_vehicle/../base/../base/../public/ruby_core_plugin.h:
 code/r_vehicle/../base/hardware_procs.h:
 code/r_vehicle/../base/radio_utils.h:
 code/r_vehicle/../base/ruby_ipc.h:

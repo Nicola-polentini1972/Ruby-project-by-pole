@@ -33,6 +33,12 @@
 static const char* s_szQualityLabels[4] = { "Low — 8 Mbps", "Medium — 16 Mbps", "High — 25 Mbps", "Max — 40 Mbps" };
 static const unsigned s_uQualityKbps[4] = { 8000, 16000, 25000, 40000 };
 
+// GOP preset: { label, tenths of a second }. Longer GOP squeezes more quality
+// out of the same bitrate but loses more footage if the recording is cut off
+// mid-GOP by a crash/power loss, and coarsens seek points when editing.
+static const char* s_szGopLabels[4] = { "0.5s — safest on crash", "1.0s — default", "2.0s", "4.0s — best quality" };
+static const unsigned s_uGopTenths[4] = { 5, 10, 20, 40 };
+
 MenuVehicleOnboardRecording::MenuVehicleOnboardRecording(void)
 : Menu(MENU_ID_VEHICLE_ONBOARD_RECORDING, L("Onboard Recording"), NULL)
 {
@@ -53,6 +59,12 @@ MenuVehicleOnboardRecording::MenuVehicleOnboardRecording(void)
       m_pItemsSelect[1]->addSelection(s_szQualityLabels[i]);
    m_pItemsSelect[1]->setIsEditable();
    m_IndexQuality = addMenuItem(m_pItemsSelect[1]);
+
+   m_pItemsSelect[2] = new MenuItemSelect(L("Recording GOP"), L("Keyframe interval for the onboard SD stream. Longer improves quality at the same bitrate but loses more footage if a crash cuts the recording mid-GOP, and coarsens seek points when editing."));
+   for ( int i = 0; i < 4; i++ )
+      m_pItemsSelect[2]->addSelection(s_szGopLabels[i]);
+   m_pItemsSelect[2]->setIsEditable();
+   m_IndexGop = addMenuItem(m_pItemsSelect[2]);
 }
 
 void MenuVehicleOnboardRecording::onShow()
@@ -109,13 +121,17 @@ void MenuVehicleOnboardRecording::valuesToUI()
    if ( iTarget < 0 || iTarget > 2 ) iTarget = 0;
    int iQuality = pCS->iOnboardRecordingQuality;
    if ( iQuality < 0 || iQuality > 3 ) iQuality = 1;
+   int iGop = pCS->iOnboardRecordingGopIdx;
+   if ( iGop < 0 || iGop > 3 ) iGop = 1;
 
    m_pItemsSelect[0]->setSelection(iTarget);
    m_pItemsSelect[1]->setSelection(iQuality);
+   m_pItemsSelect[2]->setSelection(iGop);
 
    m_pItemsSelect[0]->setEnabled(m_bBackendSupported);
-   // Quality applies to the onboard SD stream — relevant for Onboard (1) and Both (2).
+   // Quality/GOP apply to the onboard SD stream — relevant for Onboard (1) and Both (2).
    m_pItemsSelect[1]->setEnabled(m_bBackendSupported && (iTarget >= 1));
+   m_pItemsSelect[2]->setEnabled(m_bBackendSupported && (iTarget >= 1));
 }
 
 void MenuVehicleOnboardRecording::_pushSettingsToVehicle()
@@ -134,6 +150,9 @@ void MenuVehicleOnboardRecording::_pushSettingsToVehicle()
    if ( iQ < 0 || iQ > 3 ) iQ = 1;
    params.uQualityIdx = (u8)iQ;
    params.uBitrateKbps = s_uQualityKbps[iQ];
+   int iG = pCS->iOnboardRecordingGopIdx;
+   if ( iG < 0 || iG > 3 ) iG = 1;
+   params.uGopTenths = (u16)s_uGopTenths[iG];
 
    handle_commands_send_to_vehicle(COMMAND_ID_SET_ONBOARD_RECORDING, 0, (u8*)&params, sizeof(params));
 }
@@ -181,6 +200,20 @@ void MenuVehicleOnboardRecording::onSelectItem()
          save_ControllerSettings();
          // Push to vehicle only if onboard recording is part of the current target
          // (Onboard or Both); otherwise stored locally, applied on next toggle.
+         if ( pCS->iRecordingTarget >= 1 )
+            _pushSettingsToVehicle();
+      }
+      valuesToUI();
+      return;
+   }
+
+   if ( m_SelectedIndex == m_IndexGop )
+   {
+      int iNew = m_pItemsSelect[2]->getSelectedIndex();
+      if ( iNew != pCS->iOnboardRecordingGopIdx )
+      {
+         pCS->iOnboardRecordingGopIdx = iNew;
+         save_ControllerSettings();
          if ( pCS->iRecordingTarget >= 1 )
             _pushSettingsToVehicle();
       }

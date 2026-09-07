@@ -22,5 +22,6 @@ class MenuVehicleOnboardRecording: public Menu
       MenuItemSelect* m_pItemsSelect[4];
       int m_IndexTarget;
       int m_IndexQuality;
+      int m_IndexGop;
       bool m_bBackendSupported; // cached at menu open
 };

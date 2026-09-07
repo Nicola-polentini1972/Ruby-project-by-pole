@@ -36,6 +36,7 @@ code/r_vehicle/process_local_packets.o: \
  code/r_vehicle/../base/hardware_serial.h \
  code/r_vehicle/../base/ruby_ipc.h code/r_vehicle/../base/commands.h \
  code/r_vehicle/../base/../base/core_plugins_settings.h \
+ code/r_vehicle/../base/../base/../public/ruby_core_plugin.h \
  code/r_vehicle/../base/hardware_procs.h \
  code/r_vehicle/../base/hardware_camera.h \
  code/r_vehicle/../base/../base/hardware_cam_maj.h \
@@ -106,6 +107,7 @@ code/r_vehicle/../base/hardware_serial.h:
 code/r_vehicle/../base/ruby_ipc.h:
 code/r_vehicle/../base/commands.h:
 code/r_vehicle/../base/../base/core_plugins_settings.h:
+code/r_vehicle/../base/../base/../public/ruby_core_plugin.h:
 code/r_vehicle/../base/hardware_procs.h:
 code/r_vehicle/../base/hardware_camera.h:
 code/r_vehicle/../base/../base/hardware_cam_maj.h:

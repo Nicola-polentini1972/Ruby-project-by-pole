@@ -307,6 +307,7 @@ typedef struct
    u8 uTarget;       // 0 - ground (onboard recording off), 1 - onboard SD
    u8 uQualityIdx;   // 0..3, informational echo of the controller preset
    u32 uBitrateKbps; // recording channel bitrate in kbps (dual VENC channel)
+   u16 uGopTenths;   // GOP size in tenths of a second (e.g. 10 = 1.0s), 0 => vehicle defaults to 1.0s
 } __attribute__((packed)) command_packet_onboard_recording;
 
 #define COMMAND_ID_ONBOARD_RECORD 216

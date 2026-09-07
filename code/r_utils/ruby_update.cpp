@@ -1005,6 +1005,12 @@ int main(int argc, char *argv[])
    if ( (iMajor < 11) || (iMajor == 11 && iMinor <= 8) )
       do_update_to_118();
 
+   if ( s_isVehicle && (NULL != pModel) )
+   {
+      pModel->sw_version = (((u32)SYSTEM_SW_VERSION_MAJOR) * 256 + (u32)SYSTEM_SW_VERSION_MINOR) | (((u32)SYSTEM_SW_BUILD_NUMBER)<<16);
+      log_line("Updated vehicle model software version to: %d.%d (b-%d)", get_sw_version_major(pModel), get_sw_version_minor(pModel), get_sw_version_build(pModel));
+   }
+
    saveCurrentModel();
 
    // For vehicles older than 11.6, stop telemetry process first as it would fail to read the new model (before reboot) and try to save it in old format

@@ -73,6 +73,19 @@
 //#define DEFAULT_HP_VIDEO_RADIO_DATARATE 12000000
 #define DEFAULT_HP_VIDEO_RADIO_DATARATE 0 // Auto
 
+// Onboard SD recording, waybeam "dual" mode only (independent second encoder
+// channel: ch0 keeps streaming at the radio-adaptive bitrate, ch1 records to
+// SD at these fixed, higher settings, decoupled from the radio link state).
+// Values match waybeam's record.* JSON keys (kbps, seconds). Requires
+// hwcam_be_supports_onboard_recording() (waybeam on Star6E/SSC338Q only) --
+// no effect on majestic.
+#define DEFAULT_ONBOARD_RECORD_MODE "dual"
+#define DEFAULT_ONBOARD_RECORD_FORMAT "ts" // "ts" (MPEG-TS w/ audio) or "hevc" (raw NAL)
+#define DEFAULT_ONBOARD_RECORD_BITRATE_KBPS 20000 // ch1 bitrate, in Kbps (0 would mean "mirror video0")
+#define DEFAULT_ONBOARD_RECORD_FPS 0 // 0 = sensor max fps for ch1
+#define DEFAULT_ONBOARD_RECORD_GOP_SECONDS 2.0 // ch1 GOP interval, in seconds (0 would mean "same as video0")
+#define DEFAULT_ONBOARD_RECORD_DIR "/mnt/mmcblk0p1"
+
 #define MAX_BUFFERED_AUDIO_PACKETS 64
 #define DEFAULT_AUDIO_BUFFERING_SIZE ((u32)0x03)
 #define DEFAULT_AUDIO_PACKET_LENGTH 500

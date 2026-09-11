@@ -31,6 +31,7 @@
 */
 
 #include "base.h"
+#include "config_video.h"
 #include "hardware_cam_maj.h"
 #include "hardware_cam_backend.h"
 #include "hardware_camera.h"
@@ -863,6 +864,36 @@ void _hardware_camera_maj_set_all_params()
       }
    }
    hardware_camera_maj_set_daylight_off((s_CurrentMajesticCamSettings.uFlags & CAMERA_FLAG_OPENIPC_DAYLIGHT_OFF)?1:0, false);
+
+   // Onboard SD recording: waybeam-only independent second encoder channel
+   // (record.mode=dual). ch0 keeps streaming at the radio-adaptive bitrate
+   // set above; ch1 records to SD at fixed, higher settings decoupled from
+   // the radio link state. Pre-start config write only (dual mode requires
+   // a pipeline restart on waybeam, so this must land in the JSON config
+   // before the encoder process launches, not via a live HTTP set call).
+   if ( bWbm && hwcam_be_supports_onboard_recording() )
+   {
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.mode", DEFAULT_ONBOARD_RECORD_MODE, true);
+      _execute_maj_command_wait(szComm);
+
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.format", DEFAULT_ONBOARD_RECORD_FORMAT, true);
+      _execute_maj_command_wait(szComm);
+
+      snprintf(szVal, sizeof(szVal), "%d", DEFAULT_ONBOARD_RECORD_BITRATE_KBPS);
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.bitrate", szVal, false);
+      _execute_maj_command_wait(szComm);
+
+      snprintf(szVal, sizeof(szVal), "%d", DEFAULT_ONBOARD_RECORD_FPS);
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.fps", szVal, false);
+      _execute_maj_command_wait(szComm);
+
+      snprintf(szVal, sizeof(szVal), "%.1f", DEFAULT_ONBOARD_RECORD_GOP_SECONDS);
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.gopSize", szVal, false);
+      _execute_maj_command_wait(szComm);
+
+      hwcam_be_format_cli_set(szComm, sizeof(szComm), ".record.dir", DEFAULT_ONBOARD_RECORD_DIR, true);
+      _execute_maj_command_wait(szComm);
+   }
 
    _hardware_camera_maj_apply_image_settings();
 }
